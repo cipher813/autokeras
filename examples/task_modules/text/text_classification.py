@@ -11,8 +11,8 @@ def convert_labels_to_one_hot(labels, num_labels):
 
 
 if __name__ == '__main__':
-    file_path1 = "examples/task_modules/text/train_data.tsv"
-    file_path2 = "examples/task_modules/text/test_data.tsv"
+    file_path1 = "train_data.tsv"
+    file_path2 = "test_data.tsv"
     x_train, y_train = read_tsv_file(input_file=file_path1)
     x_test, y_test = read_tsv_file(input_file=file_path2)
 

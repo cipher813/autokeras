@@ -24,6 +24,7 @@ from autokeras.utils import download_file_from_google_drive
 
 PYTORCH_PRETRAINED_BERT_CACHE = Path(os.getenv('PYTORCH_PRETRAINED_BERT_CACHE',
                                                Path.home() / '.pytorch_pretrained_bert'))
+print(PYTORCH_PRETRAINED_BERT_CACHE)
 
 
 class InputFeatures(object):

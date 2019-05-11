@@ -301,7 +301,7 @@ def download_file_from_google_drive(file_id, dest_path, verbose=False):
     if verbose:
         print('Downloading file with Google ID {} into {}... '.format(file_id, dest_path), end='')
     stdout.flush()
-
+    print(Constant.DOWNLOAD_URL)
     response = session.get(Constant.DOWNLOAD_URL, params={'id': file_id}, stream=True)
 
     token = get_confirm_token(response)

@@ -10,7 +10,9 @@ Preprocessed data from [Keras](https://keras.io/datasets/)
 """
 import os
 import re
+import boto3
 import urllib
+import shutil
 import zipfile
 import tarfile
 import numpy as np
@@ -28,7 +30,7 @@ def download_s3_dir(bucket, dir_key, file_list, out_dir):
     :out_dir: path/to/output
     """
     if os.path.exists(out_dir):
-        return
+        shutil.rmtree(out_dir)
     if not os.path.exists(out_dir):
         os.makedirs(out_dir)
     s3 = boto3.resource("s3")
@@ -100,13 +102,13 @@ def convert_labels_to_one_hot(labels, num_labels):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument(
-        "--bucket", help="str bucket with required files on s3"
+        "--bucket", required=True, help="str bucket with required files on s3"
     )
     parser.add_argument(
-        "--dir-key", help="path from bucket to required files, exclusive"
+        "--dir-key", required=True, help="path from bucket to required files, exclusive"
     )
     parser.add_argument(
-        "--file-list", help="list of required files"
+        "--file-list", required=True, type=list, nargs='+', help="list of required files"
     )
     parser.add_argument(
         "--visual-path", help="path to save visualizations"
@@ -114,8 +116,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # to download required pretrained bert files
-    if args.bucket:
-        download_s3_dir(args.bucket, args.dir_key, args.file_list, os.path.join(os.path.expanduser("~"),".pytorch_pretrained_bert/"))
+    download_s3_dir(args.bucket, args.dir_key, args.file_list, os.path.join(os.path.expanduser("~"),".pytorch_pretrained_bert/"))
 
     fp = download_url_to_filepath("/tmp/imdb.tar.gz","http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz")
     fd = unzip_file(fp,"/tmp/imdb")

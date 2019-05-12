@@ -232,6 +232,7 @@ class BasicTokenizer(object):
         """Performs invalid character removal and whitespace cleanup on text."""
         output = []
         for char in text:
+
             cp = ord(char)
             if cp == 0 or cp == 0xfffd or _is_control(char):
                 continue

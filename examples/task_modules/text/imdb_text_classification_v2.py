@@ -108,6 +108,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "--file-list", help="list of required files"
     )
+    parser.add_argument(
+        "--visual-path", help="path to save visualizations"
+    )
     args = parser.parse_args()
 
     # to download required pretrained bert files
@@ -126,6 +129,10 @@ if __name__ == "__main__":
     y_train = convert_labels_to_one_hot(y_train, num_labels=2)
     y_test = convert_labels_to_one_hot(y_test, num_labels=2)
 
-    clf = TextClassifier(verbose=True)
+    visual_path = args.visual_path if args.visual_path else None
+    clf = TextClassifier(path=visual_path,verbose=True)
     clf.fit(x=x_train, y=y_train, time_limit=12 * 60 * 60)
     print("Classification accuracy is : ", 100 * clf.evaluate(x_test, y_test), "%")
+
+    if args.visual_path:
+        print(f"Run visualize.py at path {args.visual_path}")

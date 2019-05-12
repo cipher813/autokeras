@@ -110,22 +110,22 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-# to download required pretrained bert files
-if args.bucket:
-    download_s3_dir(args.bucket, args.dir_key, args.file_list, os.path.join(os.path.expanduser("~"),".pytorch_pretrained_bert/"))
+    # to download required pretrained bert files
+    if args.bucket:
+        download_s3_dir(args.bucket, args.dir_key, args.file_list, os.path.join(os.path.expanduser("~"),".pytorch_pretrained_bert/"))
 
-fp = download_url_to_filepath("/tmp/imdb.tar.gz","http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz")
-fd = unzip_file(fp,"/tmp/imdb")
+    fp = download_url_to_filepath("/tmp/imdb.tar.gz","http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz")
+    fd = unzip_file(fp,"/tmp/imdb")
 
-x_train, y_train = prep_sample(fd,'train')
-x_test, y_test = prep_sample(fd,'test')
+    x_train, y_train = prep_sample(fd,'train')
+    x_test, y_test = prep_sample(fd,'test')
 
-print(f"X,Y Train: {len(x_train),len(x_train[0])},{len(y_train)}")
-print(f"X,Y Test: {len(x_test),len(x_test[0])},{len(y_test)}")
+    print(f"X,Y Train: {len(x_train),len(x_train[0])},{len(y_train)}")
+    print(f"X,Y Test: {len(x_test),len(x_test[0])},{len(y_test)}")
 
-y_train = convert_labels_to_one_hot(y_train, num_labels=2)
-y_test = convert_labels_to_one_hot(y_test, num_labels=2)
+    y_train = convert_labels_to_one_hot(y_train, num_labels=2)
+    y_test = convert_labels_to_one_hot(y_test, num_labels=2)
 
-clf = TextClassifier(verbose=True)
-clf.fit(x=x_train, y=y_train, time_limit=12 * 60 * 60)
-print("Classification accuracy is : ", 100 * clf.evaluate(x_test, y_test), "%")
+    clf = TextClassifier(verbose=True)
+    clf.fit(x=x_train, y=y_train, time_limit=12 * 60 * 60)
+    print("Classification accuracy is : ", 100 * clf.evaluate(x_test, y_test), "%")

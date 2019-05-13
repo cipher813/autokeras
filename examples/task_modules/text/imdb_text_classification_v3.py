@@ -150,7 +150,7 @@ if __name__ == "__main__":
     y_test = convert_labels_to_one_hot(y_test, num_labels=2)
 
     # visual_path = args.visual_path if args.visual_path else None
-    visual_path = "~/autokeras_visuals/"
+    visual_path = "/home/ec2-user/autokeras_visuals/"
     if not os.path.exists(visual_path):
         os.makedirs(visual_path)    
     clf = TextClassifier(path=visual_path,verbose=True)

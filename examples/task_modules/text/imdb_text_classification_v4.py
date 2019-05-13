@@ -82,15 +82,13 @@ def convert_labels_to_one_hot(labels, num_labels):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument(
-        "--s3-path", help="str bucket with required files on s3"
-    )
-    parser.add_argument(
         "--visual-path", help="path to save visualizations"
     )
     args = parser.parse_args()
 
     # to download required pretrained bert files
-    s3.download_dir(args.s3_path, os.path.join(os.path.expanduser("~"),".pytorch_pretrained_bert"))
+    s3.download_dir("s3://nucleus-chc-preprod-datasciences/users/bmcmahon/nas/pytorch_pretrained_bert",
+                    os.path.join(os.path.expanduser("~"),".pytorch_pretrained_bert"))
 
     fp = download_url_to_filepath("/tmp/imdb.tar.gz","http://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz")
     fd = unzip_file(fp,"/tmp/imdb")

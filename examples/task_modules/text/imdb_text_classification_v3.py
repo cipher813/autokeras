@@ -151,6 +151,8 @@ if __name__ == "__main__":
 
     # visual_path = args.visual_path if args.visual_path else None
     visual_path = "~/autokeras_visuals/"
+    if not os.path.exists(visual_path):
+        os.makedirs(visual_path)    
     clf = TextClassifier(path=visual_path,verbose=True)
     clf.fit(x=x_train, y=y_train, time_limit=12 * 60 * 60)
     print("Classification accuracy is : ", 100 * clf.evaluate(x_test, y_test), "%")
